@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <html>
 <head>
     <title>Users Crud</title>
@@ -16,7 +18,7 @@
                 Welcome back!
             </h1>
 
-            <form class="grid gap-6 mt-4 min-w-100" action="" method="post">
+            <form class="grid gap-6 mt-4 min-w-100" action="LoginServlet" method="post">
                 <div class="grid gap-1">
                     <label for="user-email" class="text-neutral-600 font-medium">Your email</label>
                     <input
@@ -32,14 +34,20 @@
                     <label for="user-passwd" class="text-neutral-600 font-medium">Your password</label>
                     <input
                             required
-                            type="text"
+                            type="password"
                             id="user-passwd"
                             name="password"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
 
-                <button class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
+                <c:if test="${not empty errorMessage}">
+                    <div class="error-message">
+                        <c:out value="${errorMessage}" />
+                    </div>
+                </c:if>
+
+                <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
                     <i class="bi bi-box-arrow-in-right mr-1 stroke-2 size-10"></i> Sign In
                 </button>
             </form>

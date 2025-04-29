@@ -10,10 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name="userServlet", value="/user")
+@WebServlet(name="userServlet", value="/users")
 public class UserServlet extends HttpServlet {
-
     private UserService userService;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("/views/user.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,17 +26,5 @@ public class UserServlet extends HttpServlet {
         String password = req.getParameter("password");
         int role = Integer.parseInt(req.getParameter("role"));
 
-        User user = new User();
-        user.name = username;
-        user.email = email;
-        user.password = password;
-        user.role = role;
-
-        this.userService.push(user);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("/views/user.jsp").forward(req, resp);
     }
 }
