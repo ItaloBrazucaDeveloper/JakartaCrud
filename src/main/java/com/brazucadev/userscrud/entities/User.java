@@ -9,16 +9,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private int role;
 
     public User() {}
+
+    public User(String name, String email, String password, Integer role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     // Métodos setters que retornam a própria instância (this)
     public User setId(long id) {

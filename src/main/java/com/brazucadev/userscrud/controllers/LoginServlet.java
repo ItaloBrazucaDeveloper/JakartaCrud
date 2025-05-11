@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name="loginServlet", value="/")
+@WebServlet(name="loginServlet", value="/login")
 public class LoginServlet extends HttpServlet {
     ILoginService loginService = new LoginService();
 
@@ -27,10 +27,10 @@ public class LoginServlet extends HttpServlet {
         boolean isAuthenticated = loginService.login(email, password, req.getSession());
 
         if (!isAuthenticated) {
-            req.setAttribute("errorMessage", "Email ou senha inválidos!");
+            req.setAttribute("errorMessage", "Email e/ou senha inválidos!");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect("/users");
+            resp.sendRedirect(req.getContextPath() + "/users");
         }
     }
 }

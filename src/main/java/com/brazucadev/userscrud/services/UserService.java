@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService implements IUserService {
-
-    private UserRepository userRepository;
+    private UserRepository userRepository = new UserRepository();
 
     @Override
     public List<User> list() {

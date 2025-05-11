@@ -18,7 +18,7 @@
                 Welcome back!
             </h1>
 
-            <form class="grid gap-6 mt-4 min-w-100" action="LoginServlet" method="post">
+            <form class="grid gap-6 mt-4 min-w-100" method="post" action="${pageContext.request.contextPath}/login">
                 <div class="grid gap-1">
                     <label for="user-email" class="text-neutral-600 font-medium">Your email</label>
                     <input
@@ -41,15 +41,15 @@
                     />
                 </div>
 
-                <c:if test="${not empty errorMessage}">
-                    <div class="error-message">
-                        <c:out value="${errorMessage}" />
-                    </div>
-                </c:if>
-
                 <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
                     <i class="bi bi-box-arrow-in-right mr-1 stroke-2 size-10"></i> Sign In
                 </button>
+
+                <c:if test="${not empty errorMessage}">
+                    <span class="text-rose-500 w-full text-center outline-1 outline-rose-600 rounded-md py-3">
+                        <c:out value="${errorMessage}" />
+                    </span>
+                </c:if>
             </form>
         </div>
     </main>

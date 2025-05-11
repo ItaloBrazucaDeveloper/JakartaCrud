@@ -9,7 +9,8 @@ import jakarta.persistence.Persistence;
 import java.util.Optional;
 
 public class LoginRepository implements ILoginRepository {
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+	private static final EntityManagerFactory emf
+		= Persistence.createEntityManagerFactory("my-persistence-unit");
 	private final EntityManager entityManager;
 
 
@@ -20,7 +21,9 @@ public class LoginRepository implements ILoginRepository {
 	@Override
 	public Optional<User> validate(String email, String password) {
 		try {
-			String query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :password";
+			String query = """
+				SELECT u FROM User u WHERE u.email = :email AND u.password = :password
+			""";
 
 			User user = entityManager
 				.createQuery(query, User.class)
