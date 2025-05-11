@@ -3,12 +3,18 @@ package com.brazucadev.userscrud.services;
 import com.brazucadev.userscrud.entities.User;
 import com.brazucadev.userscrud.repositories.ILoginRepository;
 import com.brazucadev.userscrud.repositories.LoginRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.Optional;
 
 public class LoginService implements ILoginService {
-	ILoginRepository repository = new LoginRepository();
+	ILoginRepository repository;
+
+	public LoginService() {
+		this.repository = new LoginRepository();
+	}
 
 	public boolean login(String email, String password, HttpSession session) {
 		Optional<User> userOptional = repository.validate(email, password);

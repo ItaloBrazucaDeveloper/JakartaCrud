@@ -42,9 +42,13 @@
                                             <c:if test="${user.getRole() == 1}">Admin</c:if>
                                             <c:if test="${user.getRole() == 2}">Common user</c:if>
                                         </td>
-                                        <td>
-                                            <button id="open-update-user-dialog"><i class="bi bi-pencil-square"></i></button>
-                                            <button id="close-delete-user-dialog"><i class="bi bi-eraser"></i></button>
+                                        <td class="space-x-2">
+                                            <button title="Edit" id="open-update-user-dialog" class="cursor-pointer">
+                                                <i class="bi bi-pencil-square text-lg"></i>
+                                            </button>
+                                            <button title="Delete" id="open-delete-user-dialog" class="cursor-pointer">
+                                                <i class="bi bi-eraser text-rose-600 text-lg"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -62,21 +66,21 @@
             </div>
         </div>
 
-        <dialog id="create-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto">
-            <header class="flex justify-between items-center border-b-1 border-b-zinc-200 pt-1 pb-3">
+        <dialog id="create-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto bg-amber-50 shadow-md ring-2 ring-stone-300">
+            <header class="flex justify-between items-center border-b-1 border-b-stone-800/20 pt-1 pb-3">
                 <h2 class="text-lg font-medium">Add a new user</h2>
                 <button id="close-create-user-dialog" class="cursor-pointer p-1 outline-1 outline-rose-600 rounded-full">
                     <i class="bi bi-x text-rose-500"></i>
                 </button>
             </header>
-            <form class="grid gap-6 mt-4 min-w-100" method="post">
+            <form class="grid gap-6 mt-4 min-w-100" method="post" id="create-user-form">
                 <div class="grid gap-1">
                     <label for="user-name" class="text-neutral-600 font-medium">Insert a name</label>
                     <input
                             required
                             type="text"
                             id="user-name"
-                            name="name"
+                            name="create-user-name"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
@@ -86,7 +90,7 @@
                     <input
                             required
                             type="text"
-                            id="user-email"
+                            id="create-user-email"
                             name="email"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
@@ -98,7 +102,7 @@
                             required
                             type="password"
                             id="user-passwd"
-                            name="password"
+                            name="create-user-password"
                             class="outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
@@ -108,7 +112,7 @@
                     <select
                             class="block w-full rounded-md outline-2 outline-stone-300 focus:outline-stone-400 p-2 rounded-md p-2 shadow-sm"
                             id="role-selected-create"
-                            name="role-selected"
+                            name="create-user-role"
                             required
                     >
                         <option value="1">Common user</option>
@@ -116,21 +120,20 @@
                     </select>
                 </div>
 
-
-                <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
+                <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-md ring-2 ring-emerald-700/80">
                     New user
                 </button>
             </form>
         </dialog>
 
-        <dialog id="update-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto">
+        <dialog id="update-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto bg-amber-50 shadow-md ring-2 ring-stone-300">
             <header class="flex justify-between items-center border-b-1 border-b-zinc-200 pt-1 pb-3">
                 <h2 class="text-lg font-medium">Update User</h2>
                 <button id="close-update-user-dialog" class="cursor-pointer p-1 outline-1 outline-rose-600 rounded-full">
                     <i class="bi bi-x text-rose-500"></i>
                 </button>
             </header>
-            <form class="grid gap-6 mt-4 min-w-100" method="post">
+            <form class="grid gap-6 mt-4 min-w-100" method="post" id="update-user-form">
                 <input type="hidden" id="user-id-update" name="id" />
                 <div class="grid gap-1">
                     <label for="user-name-update" class="text-neutral-600 font-medium">Update name</label>
@@ -138,7 +141,7 @@
                             required
                             type="text"
                             id="user-name-update"
-                            name="name"
+                            name="update-user-name"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
@@ -148,7 +151,7 @@
                     <input
                             required
                             type="text"
-                            id="user-email-update"
+                            id="update-user-email"
                             name="email"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
@@ -159,7 +162,7 @@
                     <select
                             class="block w-full rounded-md outline-2 outline-stone-300 focus:outline-stone-400 p-2 shadow-sm"
                             id="role-selected-update"
-                            name="role-selected"
+                            name="update-user-role"
                             required
                     >
                         <option value="1">Common user</option>
@@ -167,25 +170,25 @@
                     </select>
                 </div>
 
-                <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
+                <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-md ring-2 ring-emerald-700/80">
                     Update user
                 </button>
             </form>
         </dialog>
 
-        <dialog id="delete-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto">
+        <dialog id="delete-user-dialog" class="p-4 rounded-lg m-auto z-30 overflow-y-auto bg-amber-50 shadow-md ring-2 ring-stone-300">
             <header class="flex justify-between items-center border-b-1 border-b-zinc-200 pt-1 pb-3">
                 <h2 class="text-lg font-medium">Delete User</h2>
                 <button id="close-delete-user-dialog" class="cursor-pointer p-1 outline-1 outline-rose-600 rounded-full">
                     <i class="bi bi-x text-rose-500"></i>
                 </button>
             </header>
-            <form class="grid gap-6 mt-4 min-w-100" method="post">
+            <form class="grid gap-6 mt-4 min-w-100" method="post" id="delete-user-form">
                 <input type="hidden" id="user-id-delete" name="id" />
                 <div class="text-neutral-700 mb-4">
                     Are you sure you want to <b>delete</b> this user? This action cannot be undone.
                 </div>
-                <button type="submit" class="mt-2 bg-rose-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
+                <button type="submit" class="mt-2 bg-rose-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-md ring-2 ring-rose-700/60">
                     Delete user
                 </button>
             </form>

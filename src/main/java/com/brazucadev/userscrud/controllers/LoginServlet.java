@@ -2,6 +2,7 @@ package com.brazucadev.userscrud.controllers;
 
 import com.brazucadev.userscrud.services.ILoginService;
 import com.brazucadev.userscrud.services.LoginService;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,11 @@ import java.io.IOException;
 
 @WebServlet(name="loginServlet", value="/login")
 public class LoginServlet extends HttpServlet {
-    ILoginService loginService = new LoginService();
+    ILoginService loginService;
+
+    public LoginServlet() {
+        this.loginService = new LoginService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

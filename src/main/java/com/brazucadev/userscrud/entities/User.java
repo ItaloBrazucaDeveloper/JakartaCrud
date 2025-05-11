@@ -30,37 +30,6 @@ public class User {
         this.role = role;
     }
 
-    // Métodos setters que retornam a própria instância (this)
-    public User setId(long id) {
-        this.id = id;
-        return this;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public User setRole(int role) {
-        this.role = role;
-        return this;
-    }
-
-    // Método build que retorna a instância construída
-    public User build() {
-        return this;
-    }
-
     // Getters para acessar os atributos
     public long getId() {
         return id;
