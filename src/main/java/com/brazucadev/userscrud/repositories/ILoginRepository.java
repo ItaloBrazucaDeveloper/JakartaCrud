@@ -5,5 +5,5 @@ import com.brazucadev.userscrud.entities.User;
 import java.util.Optional;
 
 public interface ILoginRepository {
-	public Optional<User> validate(String email, String password);
+	Optional<User> validate(String email, String password);
 }

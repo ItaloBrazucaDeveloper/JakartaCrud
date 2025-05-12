@@ -14,16 +14,13 @@ public class LoginService implements ILoginService {
 		this.repository = new LoginRepository();
 	}
 
-	public boolean login(String email, String password, HttpSession session) {
-		Optional<User> userOptional = repository.validate(email, password);
-		boolean isValidLogin = userOptional.isPresent();
+	public Optional<User> login(String email, String password) {
+		return repository.validate(email, password);
+	}
 
-		if (isValidLogin) {
-			User user = userOptional.get();
-			session.setAttribute("userRole", user.getRole());
-			session.setAttribute("userName", user.getName());
-		}
-
-		return isValidLogin;
+	public void setUserSession(HttpSession session, User user) {
+		session.setAttribute("userRole", user.getRole());
+		session.setAttribute("userId", user.getId());
+		session.setAttribute("userName", user.getName());
 	}
 }

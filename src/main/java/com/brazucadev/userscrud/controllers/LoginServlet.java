@@ -1,5 +1,6 @@
 package com.brazucadev.userscrud.controllers;
 
+import com.brazucadev.userscrud.entities.User;
 import com.brazucadev.userscrud.services.ILoginService;
 import com.brazucadev.userscrud.services.LoginService;
 import jakarta.servlet.ServletException;
@@ -9,14 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
-@WebServlet(name="loginServlet", value="/login")
+@WebServlet(name="loginServlet", urlPatterns={"/login", "/"})
 public class LoginServlet extends HttpServlet {
-    ILoginService loginService;
-
-    public LoginServlet() {
-        this.loginService = new LoginService();
-    }
+    ILoginService loginService = new LoginService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,12 +26,13 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        boolean isAuthenticated = loginService.login(email, password, req.getSession());
+        Optional<User> userAuthenticated = this.loginService.login(email, password);
 
-        if (!isAuthenticated) {
+        if (userAuthenticated.isEmpty()) {
             req.setAttribute("errorMessage", "Email e/ou senha inválidos!");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         } else {
+            this.loginService.setUserSession(req.getSession(), userAuthenticated.get());
             resp.sendRedirect(req.getContextPath() + "/users");
         }
     }

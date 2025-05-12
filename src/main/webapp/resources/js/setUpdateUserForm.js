@@ -4,7 +4,10 @@ const roleField = document.querySelector('#update-user-role');
 
 export function setUpdateUserForm(userId) {
     fetch(`http://localhost:8080/UsersCrud_war_exploded/users?id=${userId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) return response.json()
+            console.error(response.status === 401 ? "Unauthorized!" : "Error!")
+        })
         .then(data => {
             nameField.value = data.name || '';
             emailField.value = data.email || '';

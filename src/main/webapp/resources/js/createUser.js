@@ -13,7 +13,10 @@ export function setupCreateUser() {
             },
             body: fieldsAsSearchParams
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) return response.json()
+            console.error(response.status === 401 ? "Unauthorized!" : "Error!")
+        })
         .then(data => {
             sessionStorage.setItem('flashMessage', JSON.stringify({
                 type: data.type,

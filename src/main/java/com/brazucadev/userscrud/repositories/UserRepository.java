@@ -5,12 +5,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserRepository implements IUserRepository {
     private static final EntityManagerFactory emf
-      = Persistence.createEntityManagerFactory("my-persistence-unit");
+      = Persistence.createEntityManagerFactory("my-persistence-unit");;
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -18,44 +19,28 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public List<User> read(Optional<String> id) {
-        if (id.isPresent()) {
-            String query = "SELECT u FROM User u WHERE u.id = :id";
-
-            return this.getEntityManager()
-              .createQuery(query, User.class)
-              .setParameter("id", Long.parseLong(id.get()))
-              .getResultList();
-        }
-
-        String query = "SELECT u FROM User u";
-
-        return this.getEntityManager()
-          .createQuery(query, User.class)
-          .getResultList();
-    }
-
-    @Override
-    public boolean create(User user) {
         EntityManager em = getEntityManager();
 
         try {
-            em.getTransaction().begin();
-            em.persist(user); // JPA sabe transformar User em INSERT
-            em.getTransaction().commit();
-            return true;
-        } catch (Exception ex) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            ex.printStackTrace();
-            return false;
+            if (id.isPresent()) {
+                return em.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
+                  .setParameter("id", Long.parseLong(id.get()))
+                  .getResultList();
+            }
+            return em.createQuery("SELECT u FROM User u", User.class)
+              .getResultList();
+        } catch(Exception ex) {
+            return new ArrayList<>();
         } finally {
             em.close();
         }
     }
 
     @Override
-    public boolean update(User user) {
-        return false;
-    }
+    public boolean create(User user) { return persistEntity(user, true); }
+
+    @Override
+    public boolean update(User user) { return persistEntity(user, false); }
 
     @Override
     public boolean delete(long id) {
@@ -74,7 +59,25 @@ public class UserRepository implements IUserRepository {
             }
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            ex.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
+
+    private boolean persistEntity(User user, boolean isCreate) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            if (isCreate) {
+                em.persist(user);
+            } else {
+                em.merge(user);
+            }
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
             return false;
         } finally {
             em.close();

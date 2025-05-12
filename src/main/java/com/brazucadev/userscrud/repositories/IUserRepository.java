@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserRepository {
-    public List<User> read(Optional<String> id);
-    public boolean create(User user);
-    public boolean update(User user);
-    public boolean delete(long userId);
+    List<User> read(Optional<String> id);
+    boolean create(User user);
+    boolean update(User user);
+    boolean delete(long userId);
 }

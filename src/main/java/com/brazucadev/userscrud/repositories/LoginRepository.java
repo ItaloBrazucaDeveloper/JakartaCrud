@@ -15,18 +15,14 @@ public class LoginRepository implements ILoginRepository {
 	@Override
 	public Optional<User> validate(String email, String password) {
 		try {
-			String query = "SELECT u FROM User u WHERE u.email = :email";
-
 			User user = this.getEntityManager()
-				.createQuery(query, User.class)
+				.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
 				.setParameter("email", email)
 				.getSingleResult();
 
 			boolean isPasswordValid = Bcrypt.checkPassword(password, user.getPassword());
+			if (isPasswordValid) return Optional.of(user);
 
-			if (isPasswordValid) {
-				return Optional.of(user);
-			}
 			return Optional.empty();
 		} catch (NoResultException e) {
 			return Optional.empty();

@@ -8,29 +8,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserService implements IUserService {
-    private UserRepository userRepository;
+    private UserRepository userRepository = new UserRepository();
 
-    public UserService() {
-        this.userRepository = new UserRepository();
-    }
-
-    @Override
-    public List<User> list(Optional<String> id) {
-        return userRepository.read(id);
-    }
-
-    @Override
-    public boolean push(User user) {
-        // Só faz o hash se ainda não estiver hasheada
+    public User setBcryptPassword(User user) {
         if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
             user.setPassword(Bcrypt.hashPassword(user.getPassword()));
         }
-        return this.userRepository.create(user);
+        return user;
+    }
+
+    @Override
+    public List<User> list(Optional<String> id) { return userRepository.read(id); }
+
+    @Override
+    public boolean push(User user) {
+        return this.userRepository.create(setBcryptPassword(user));
     }
 
     @Override
     public boolean refresh(User user) {
-        return false;
+        return this.userRepository.update(setBcryptPassword(user));
     }
 
     @Override

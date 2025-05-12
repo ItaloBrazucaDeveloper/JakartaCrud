@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    public List<User> list(Optional<String> id);
-    public boolean push(User user);
-    public boolean refresh(User user);
-    public boolean remove(long userId);
+    List<User> list(Optional<String> id);
+    boolean push(User user);
+    boolean refresh(User user);
+    boolean remove(long userId);
 }
