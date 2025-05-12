@@ -1,18 +1,15 @@
 package com.brazucadev.userscrud.repositories;
 
 import com.brazucadev.userscrud.entities.User;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+    private static final EntityManagerFactory emf
+      = Persistence.createEntityManagerFactory("my-persistence-unit");
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -46,12 +43,31 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void update(User user) {
-
+    public boolean update(User user) {
+        return false;
     }
 
     @Override
-    public void delete(long id) {
+    public boolean delete(long id) {
+        EntityManager em = getEntityManager();
 
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            if (user != null) {
+                em.remove(user); // Remove a entidade
+                em.getTransaction().commit();
+                return true;
+            } else {
+                em.getTransaction().rollback();
+                return false;
+            }
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
     }
 }

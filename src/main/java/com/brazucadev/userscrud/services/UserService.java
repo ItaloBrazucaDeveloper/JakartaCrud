@@ -2,8 +2,7 @@ package com.brazucadev.userscrud.services;
 
 import com.brazucadev.userscrud.entities.User;
 import com.brazucadev.userscrud.repositories.UserRepository;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import com.brazucadev.userscrud.utils.Bcrypt;
 
 import java.util.List;
 
@@ -21,6 +20,10 @@ public class UserService implements IUserService {
 
     @Override
     public boolean push(User user) {
+        // Só faz o hash se ainda não estiver hasheada
+        if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
+            user.setPassword(Bcrypt.hashPassword(user.getPassword()));
+        }
         return this.userRepository.create(user);
     }
 
@@ -30,7 +33,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean remove(User user) {
-        return false;
+    public boolean remove(long userId) {
+        return this.userRepository.delete(userId);
     }
 }

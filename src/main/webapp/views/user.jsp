@@ -12,19 +12,22 @@
 </head>
 
 <body>
-    <main class="flex flex-col items-center h-screen w-full bg-amber-100">
-        <div class="flex flex-col justify-center gap-5 mt-25 w-9/10 md:w-1/2">
-            <div class="flex justify-end items-end w-full">
+    <main class="flex flex-col justify-center items-center h-screen w-full bg-amber-100">
+        <div class="flash-message"></div>
+
+        <div class="flex flex-col justify-center gap-5 w-9/10 md:w-1/2">
+            <div class="flex justify-between items-end w-full">
+                <span>Registered users: <c:out value="${users.size()}" /></span>
                 <button id="open-create-user-dialog" class="bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 font-bold cursor-pointer shadow-sm">
                     <i class="bi bi-plus-lg stroke-2 size-10"></i>
                     <span>Add user</span>
                 </button>
             </div>
 
-            <div class="border border-neutral-200/60 outline-3 outline-neutral-100 rounded-lg overflow-hidden shadow-md w-full">
+            <div class="hidden-scroll border border-neutral-200/60 outline-3 outline-neutral-100 rounded-lg overflow-auto shadow-md w-full max-h-[600px]">
                 <table class="table-auto bg-amber-50 w-full">
-                    <thead class="text-amber-800">
-                        <tr class="text-left border-b border-neutral-300 *:p-4 *:font-medium">
+                    <thead class="text-amber-800 sticky -top-0 bg-amber-50 z-5 shadow-sm shadow-neutral-300/60">
+                        <tr class="text-left *:p-4 *:font-medium">
                             <th>#</th>
                             <th>Name</th>
                             <th>Role</th>
@@ -34,19 +37,19 @@
                     <tbody class="text-left">
                         <c:choose>
                             <c:when test="${not empty users}">
-                                <c:forEach var="user" items="${users}">
+                                <c:forEach var="user" items="${users}" varStatus="status">
                                     <tr class="border-b border-neutral-300 *:p-5 hover:bg-neutral-400/5">
-                                        <td>${user.getId()}</td>
+                                        <td>${status.index + 1}</td>
                                         <td>${user.getName()}</td>
                                         <td>
                                             <c:if test="${user.getRole() == 1}">Admin</c:if>
                                             <c:if test="${user.getRole() == 2}">Common user</c:if>
                                         </td>
                                         <td class="space-x-2">
-                                            <button title="Edit" id="open-update-user-dialog" class="cursor-pointer">
+                                            <button data-user-id="${user.getId()}" title="Edit" class="cursor-pointer open-update-user-dialog">
                                                 <i class="bi bi-pencil-square text-lg"></i>
                                             </button>
-                                            <button title="Delete" id="open-delete-user-dialog" class="cursor-pointer">
+                                            <button data-user-id="${user.getId()}" title="Delete" class="cursor-pointer open-delete-user-dialog">
                                                 <i class="bi bi-eraser text-rose-600 text-lg"></i>
                                             </button>
                                         </td>
@@ -75,48 +78,48 @@
             </header>
             <form class="grid gap-6 mt-4 min-w-100" method="post" id="create-user-form">
                 <div class="grid gap-1">
-                    <label for="user-name" class="text-neutral-600 font-medium">Insert a name</label>
+                    <label for="create-user-name" class="text-neutral-600 font-medium">Insert a name</label>
                     <input
                             required
                             type="text"
-                            id="user-name"
+                            id="create-user-name"
                             name="create-user-name"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
 
                 <div class="grid gap-1">
-                    <label for="user-email" class="text-neutral-600 font-medium">Insert a email</label>
+                    <label for="create-user-email" class="text-neutral-600 font-medium">Insert a email</label>
                     <input
                             required
                             type="text"
                             id="create-user-email"
-                            name="email"
+                            name="create-user-email"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
 
                 <div class="grid gap-1">
-                    <label for="user-passwd" class="text-neutral-600 font-medium">Insert a password</label>
+                    <label for="create-user-password" class="text-neutral-600 font-medium">Insert a password</label>
                     <input
                             required
                             type="password"
-                            id="user-passwd"
+                            id="create-user-password"
                             name="create-user-password"
                             class="outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
                 </div>
 
                 <div class="grid gap-1">
-                    <label for="role-selected-create" class="text-neutral-600 font-medium">Select a role</label>
+                    <label for="create-user-role" class="text-neutral-600 font-medium">Select a role</label>
                     <select
                             class="block w-full rounded-md outline-2 outline-stone-300 focus:outline-stone-400 p-2 rounded-md p-2 shadow-sm"
-                            id="role-selected-create"
+                            id="create-user-role"
                             name="create-user-role"
                             required
                     >
-                        <option value="1">Common user</option>
-                        <option value="2">Super user</option>
+                        <option value="2">Common user</option>
+                        <option value="1">Super user</option>
                     </select>
                 </div>
 
@@ -183,8 +186,8 @@
                     <i class="bi bi-x text-rose-500"></i>
                 </button>
             </header>
-            <form class="grid gap-6 mt-4 min-w-100" method="post" id="delete-user-form">
-                <input type="hidden" id="user-id-delete" name="id" />
+            <form class="grid gap-6 mt-4 min-w-100" method="dialog" id="delete-user-form">
+                <input type="hidden" id="delete-user-id" name="id" />
                 <div class="text-neutral-700 mb-4">
                     Are you sure you want to <b>delete</b> this user? This action cannot be undone.
                 </div>
@@ -195,6 +198,6 @@
         </dialog>
     </main>
 
-    <script src="${pageContext.request.contextPath}/resources/js/dialog.js"></script>
+    <script type="module" src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </body>
 </html>

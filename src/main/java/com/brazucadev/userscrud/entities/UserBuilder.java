@@ -2,11 +2,11 @@ package com.brazucadev.userscrud.entities;
 
 public class UserBuilder {
 	// Atributos da classe User
-	long id = 0;
-	String name = "";
-	String email = "";
-	String password = "";
-	Integer role = 0;
+	private long id = 0;
+	private String name = "";
+	private String email = "";
+	private String password = "";
+	private Integer role = 0;
 
 	// Instância da classe User
 	User user;
@@ -43,6 +43,6 @@ public class UserBuilder {
 
 	// Método build que retorna a instância construída
 	public User build() {
-		return new User(name, email, password, role);
+		return new User(this.id, this.name, this.email, this.password, this.role);
 	}
 }

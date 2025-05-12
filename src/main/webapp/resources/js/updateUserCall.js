@@ -1,1 +1,0 @@
-const updateUserForm = document.querySelector("#update-user-form");

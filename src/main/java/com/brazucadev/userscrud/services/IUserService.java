@@ -8,5 +8,5 @@ public interface IUserService {
     public List<User> list();
     public boolean push(User user);
     public boolean refresh(User user);
-    public boolean remove(User user);
+    public boolean remove(long userId);
 }

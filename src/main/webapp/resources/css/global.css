@@ -5,4 +5,26 @@
 * {
     font-family: "Source Sans 3", sans-serif;
     font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes flash-message {
+    0% {
+        opacity: 100;
+    } 50% {
+         opacity: 50%;
+    } 100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.flash-message-animation {
+    animation: flash-message 3s forwards ease-out 0.500s;
+}
+
+.hidden-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }

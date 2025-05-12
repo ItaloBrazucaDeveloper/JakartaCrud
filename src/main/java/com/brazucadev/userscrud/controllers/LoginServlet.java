@@ -2,7 +2,6 @@ package com.brazucadev.userscrud.controllers;
 
 import com.brazucadev.userscrud.services.ILoginService;
 import com.brazucadev.userscrud.services.LoginService;
-import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
