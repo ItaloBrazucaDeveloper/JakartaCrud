@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepository implements IUserRepository {
     private static final EntityManagerFactory emf
@@ -16,7 +17,16 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public List<User> read() {
+    public List<User> read(Optional<String> id) {
+        if (id.isPresent()) {
+            String query = "SELECT u FROM User u WHERE u.id = :id";
+
+            return this.getEntityManager()
+              .createQuery(query, User.class)
+              .setParameter("id", Long.parseLong(id.get()))
+              .getResultList();
+        }
+
         String query = "SELECT u FROM User u";
 
         return this.getEntityManager()

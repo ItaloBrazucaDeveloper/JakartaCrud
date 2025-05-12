@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showFlashMessage(type, message)
         sessionStorage.removeItem('flashMessage')
     }
-
     setupDeleteUser()
     setupEditUser()
     setupCreateUser()

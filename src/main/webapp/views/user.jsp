@@ -137,13 +137,13 @@
                 </button>
             </header>
             <form class="grid gap-6 mt-4 min-w-100" method="post" id="update-user-form">
-                <input type="hidden" id="user-id-update" name="id" />
+                <input type="hidden" id="update-user-id" name="id" />
                 <div class="grid gap-1">
-                    <label for="user-name-update" class="text-neutral-600 font-medium">Update name</label>
+                    <label for="update-user-name" class="text-neutral-600 font-medium">Update name</label>
                     <input
                             required
                             type="text"
-                            id="user-name-update"
+                            id="update-user-name"
                             name="update-user-name"
                             class="outline outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
                     />
@@ -161,15 +161,26 @@
                 </div>
 
                 <div class="grid gap-1">
-                    <label for="role-selected-update" class="text-neutral-600 font-medium">Select a role</label>
+                    <label for="update-user-password" class="text-neutral-600 font-medium">Update password</label>
+                    <input
+                            required
+                            type="password"
+                            id="update-user-password"
+                            name="update-user-password"
+                            class="outline-2 outline-stone-300 focus:outline-stone-400 rounded-md p-2 shadow-sm"
+                    />
+                </div>
+
+                <div class="grid gap-1">
+                    <label for="update-user-role" class="text-neutral-600 font-medium">Select a role</label>
                     <select
                             class="block w-full rounded-md outline-2 outline-stone-300 focus:outline-stone-400 p-2 shadow-sm"
-                            id="role-selected-update"
+                            id="update-user-role"
                             name="update-user-role"
                             required
                     >
-                        <option value="1">Common user</option>
-                        <option value="2">Super user</option>
+                        <option value="2">Common user</option>
+                        <option value="1">Super user</option>
                     </select>
                 </div>
 

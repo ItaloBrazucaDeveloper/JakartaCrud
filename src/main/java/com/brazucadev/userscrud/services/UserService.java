@@ -5,6 +5,7 @@ import com.brazucadev.userscrud.repositories.UserRepository;
 import com.brazucadev.userscrud.utils.Bcrypt;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService implements IUserService {
     private UserRepository userRepository;
@@ -14,8 +15,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> list() {
-        return userRepository.read();
+    public List<User> list(Optional<String> id) {
+        return userRepository.read(id);
     }
 
     @Override

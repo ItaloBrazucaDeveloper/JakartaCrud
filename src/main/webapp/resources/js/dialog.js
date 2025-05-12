@@ -1,3 +1,5 @@
+import { setUpdateUserForm } from "./setUpdateUserForm.js";
+
 const createUserDialog = document.querySelector('#create-user-dialog')
 const openCreateUserDialog = document.querySelector('#open-create-user-dialog')
 const closeCreateUserDialog = document.querySelector('#close-create-user-dialog')
@@ -18,6 +20,9 @@ export function setupDialogs() {
 
     openUpdateUserDialog.forEach((openUpdateButton) => {
         openUpdateButton.onclick = () => {
+            const userId = openUpdateButton.dataset.userId;
+            document.querySelector('#update-user-id').value = userId
+            setUpdateUserForm(userId)
             updateUserDialog.showModal()
         }
     })

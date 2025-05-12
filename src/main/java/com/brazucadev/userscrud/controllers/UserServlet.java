@@ -4,6 +4,7 @@ import com.brazucadev.userscrud.entities.User;
 import com.brazucadev.userscrud.entities.UserBuilder;
 import com.brazucadev.userscrud.services.IUserService;
 import com.brazucadev.userscrud.services.UserService;
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet(name="userServlet", value="/users")
 public class UserServlet extends HttpServlet {
@@ -30,9 +32,21 @@ public class UserServlet extends HttpServlet {
             req.setAttribute("flashMessage", flash);
             req.getSession().removeAttribute("flashMessage");
         }
-        List<User> users = userService.list();
-        req.setAttribute("users", users);
-        req.getRequestDispatcher("/views/user.jsp").forward(req, resp);
+
+        Optional<String> userId = Optional.ofNullable(req.getParameter("id"));
+        List<User> users = userService.list(userId);
+
+        if (users.size() > 1) {
+            req.setAttribute("users", users);
+            req.getRequestDispatcher("/views/user.jsp").forward(req, resp);
+            return;
+        }
+
+        if (users.size() == 1) {
+            User user = users.getFirst();
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.getWriter().write(new Gson().toJson(user));
+        }
     }
 
     @Override
