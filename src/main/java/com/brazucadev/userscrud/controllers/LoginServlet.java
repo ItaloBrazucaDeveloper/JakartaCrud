@@ -26,10 +26,10 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        Optional<User> userAuthenticated = this.loginService.login(email, password);
+        Optional<User> userAuthenticated = this.loginService.validate(email, password);
 
         if (userAuthenticated.isEmpty()) {
-            req.setAttribute("errorMessage", "Email e/ou senha inválidos!");
+            req.setAttribute("errorMessage", "Invalid credentials, try again...\n");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         } else {
             this.loginService.setUserSession(req.getSession(), userAuthenticated.get());

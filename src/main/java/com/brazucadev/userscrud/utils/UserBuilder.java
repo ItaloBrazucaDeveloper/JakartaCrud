@@ -1,4 +1,6 @@
-package com.brazucadev.userscrud.entities;
+package com.brazucadev.userscrud.utils;
+
+import com.brazucadev.userscrud.entities.User;
 
 public class UserBuilder {
 	// Atributos da classe User

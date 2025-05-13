@@ -1,6 +1,7 @@
 const deleteUserForm = document.querySelector("#delete-user-form")
 
 export function setupDeleteUser() {
+    if (!deleteUserForm) return
     deleteUserForm.onsubmit = (e) => {
         e.preventDefault()
         const form = new FormData(deleteUserForm)

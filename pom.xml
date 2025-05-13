@@ -70,12 +70,6 @@
             <version>6.4.4.Final</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.weld.se</groupId>-->
-<!--            <artifactId>weld-se-core</artifactId>-->
-<!--            <version>6.0.2.Final</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -86,6 +80,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 

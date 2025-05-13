@@ -6,6 +6,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
 public interface ILoginService {
-	Optional<User> login(String email, String password);
+	Optional<User> validate(String email, String password);
 	void setUserSession(HttpSession session, User user);
 }

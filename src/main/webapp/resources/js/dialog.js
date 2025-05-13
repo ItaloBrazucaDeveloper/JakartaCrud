@@ -14,37 +14,40 @@ const closeDeleteUserDialog = document.querySelector('#close-delete-user-dialog'
 
 
 export function setupDialogs() {
-    openCreateUserDialog.onclick = () => {
-        createUserDialog.showModal()
+    if (createUserDialog) {
+        openCreateUserDialog.onclick = () => {
+            createUserDialog.showModal()
+        }
+        closeCreateUserDialog.onclick = () => {
+            createUserDialog.close();
+        }
     }
 
-    openUpdateUserDialog.forEach((openUpdateButton) => {
-        openUpdateButton.onclick = () => {
-            const userId = openUpdateButton.dataset.userId;
-            document.querySelector('#update-user-id').value = userId
-            setUpdateUserForm(userId)
-            updateUserDialog.showModal()
+    if (updateUserDialog) {
+        openUpdateUserDialog.forEach((openUpdateButton) => {
+            openUpdateButton.onclick = () => {
+                const userId = openUpdateButton.dataset.userId;
+                document.querySelector('#update-user-id').value = userId
+                setUpdateUserForm(userId)
+                updateUserDialog.showModal()
+            }
+        })
+        closeUpdateUserDialog.onclick = () => {
+          updateUserDialog.close();
         }
-    })
-
-    openDeleteUserDialog.forEach((openDeleteButton) => {
-        openDeleteButton.onclick = () => {
-            document.querySelector('#delete-user-id').value
-                = openDeleteButton.dataset.userId;
-            deleteUserDialog.showModal()
-        }
-    })
-
-    closeCreateUserDialog.onclick = () => {
-        createUserDialog.close();
-    };
-
-    closeUpdateUserDialog.onclick = () => {
-        updateUserDialog.close();
     }
 
 
-    closeDeleteUserDialog.onclick = () => {
-        deleteUserDialog.close();
+    if (deleteUserDialog) {
+         openDeleteUserDialog.forEach((openDeleteButton) => {
+            openDeleteButton.onclick = () => {
+                document.querySelector('#delete-user-id').value
+                    = openDeleteButton.dataset.userId;
+                deleteUserDialog.showModal()
+            }
+        })
+        closeDeleteUserDialog.onclick = () => {
+            deleteUserDialog.close();
+        }
     }
 }

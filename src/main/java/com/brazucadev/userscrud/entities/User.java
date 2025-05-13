@@ -1,10 +1,9 @@
 package com.brazucadev.userscrud.entities;
 
-import com.brazucadev.userscrud.utils.Bcrypt;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +51,7 @@ public class User {
         this.role = role;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
     public String getName() {
         return name;

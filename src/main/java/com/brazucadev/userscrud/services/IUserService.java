@@ -9,5 +9,5 @@ public interface IUserService {
     List<User> list(Optional<String> id);
     boolean push(User user);
     boolean refresh(User user);
-    boolean remove(long userId);
+    boolean remove(String userId);
 }

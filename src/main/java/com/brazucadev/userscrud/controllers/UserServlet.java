@@ -1,7 +1,7 @@
 package com.brazucadev.userscrud.controllers;
 
 import com.brazucadev.userscrud.entities.User;
-import com.brazucadev.userscrud.entities.UserBuilder;
+import com.brazucadev.userscrud.utils.UserBuilder;
 import com.brazucadev.userscrud.services.IUserService;
 import com.brazucadev.userscrud.services.UserService;
 import com.brazucadev.userscrud.utils.JsonBodyParser;
@@ -22,10 +22,6 @@ public class UserServlet extends HttpServlet {
     private IUserService userService = new UserService();
     private UserBuilder userBuilder = new UserBuilder();
 
-    private boolean isUserAuthenticated(HttpServletRequest req) {
-        return req.getSession().getAttribute("userRole") != null;
-    }
-
     private void writeJsonResponse(HttpServletResponse resp, int status, String json) throws IOException {
         resp.setStatus(status);
         resp.setContentType("application/json");
@@ -34,11 +30,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        if (!isUserAuthenticated(req)) {
-            resp.sendRedirect(req.getContextPath() + "/login");
-            return;
-        }
-
         Object flash = req.getSession().getAttribute("flashMessage");
         if (flash != null) {
             req.setAttribute("flashMessage", flash);
@@ -58,12 +49,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!isUserAuthenticated(req)) {
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            resp.sendRedirect(req.getContextPath() + "/login");
-            return;
-        }
-
         User user = this.userBuilder
             .withName(req.getParameter("create-user-name"))
             .withEmail(req.getParameter("create-user-email"))
@@ -73,18 +58,14 @@ public class UserServlet extends HttpServlet {
 
         if (this.userService.push(user)) {
             writeJsonResponse(resp, HttpServletResponse.SC_OK,
-              "{\"type\":\"success\", \"message\":\"Usuário registrado com sucesso!\"}");
+              "{\"type\":\"success\", \"message\":\"User registered successfully!\n\"}");
         } else {
             writeJsonResponse(resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-              "{\"type\":\"error\", \"message\":\"Não foi possível criar o usuário!\"}");
+              "{\"type\":\"error\", \"message\":\"Failed to create user!\"}");
         }
     }
 
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!isUserAuthenticated(req)) {
-            writeJsonResponse(resp, HttpServletResponse.SC_UNAUTHORIZED, "{\"error\":\"Access denied!\"}");
-            return;
-        }
         JsonObject jsonBody = JsonBodyParser.parseBodyAsJson(req);
 
         User user = this.userBuilder
@@ -97,34 +78,28 @@ public class UserServlet extends HttpServlet {
 
         if (this.userService.refresh(user)) {
             writeJsonResponse(resp, HttpServletResponse.SC_OK,
-              "{\"type\":\"success\", \"message\":\"Usuário atualizado com sucesso!\"}");
+              "{\"type\":\"success\", \"message\":\"User data updated successfully!\"}");
         } else {
             writeJsonResponse(resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-              "{\"type\":\"error\", \"message\":\"Não foi possível atualizar os dados do usuário!\"}");
+              "{\"type\":\"error\", \"message\":\"Failed to update user data!\"}");
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!isUserAuthenticated(req)) {
-            writeJsonResponse(resp, HttpServletResponse.SC_UNAUTHORIZED, "{\"error\":\"Access denied!\"}");
-            return;
-        }
-
-        String idParam = req.getParameter("id");
-        if (idParam == null) {
+        Optional<String> userId = Optional.ofNullable(req.getParameter("id"));
+        if (userId.isEmpty()) {
             writeJsonResponse(resp, HttpServletResponse.SC_BAD_REQUEST,
-              "{\"type\":\"error\", \"message\":\"Id de usuário não informado.\"}");
+              "{\"type\":\"error\", \"message\":\"User ID is required!\"}");
             return;
         }
-        long userId = Long.parseLong(req.getParameter("id"));
 
-        if (this.userService.remove(userId)) {
+        if (this.userService.remove(userId.get())) {
             writeJsonResponse(resp, HttpServletResponse.SC_OK,
-              "{\"type\":\"success\", \"message\":\"Usuário removido com sucesso!\"}");
+              "{\"type\":\"success\", \"message\":\"User removed successfully!\"}");
         } else {
             writeJsonResponse(resp, HttpServletResponse.SC_NOT_FOUND,
-              "{\"type\":\"error\", \"message\":\"Não foi possível deletar o usuário!\"}");
+              "{\"type\":\"error\", \"message\":\"Failed to remove user!\"}");
         }
     }
 }

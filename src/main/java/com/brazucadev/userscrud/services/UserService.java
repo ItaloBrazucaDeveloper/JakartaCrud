@@ -31,7 +31,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean remove(long userId) {
-        return this.userRepository.delete(userId);
+    public boolean remove(String userId) {
+        long id = Long.parseLong(userId);
+        return this.userRepository.delete(id);
     }
 }

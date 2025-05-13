@@ -1,6 +1,8 @@
-# Java no Frontend
+# ☕ Java no Frontend
 
-[![Java](https://img.shields.io/badge/Java-24-blue.svg)](https://adoptopenjdk.net)
+![Imagem da listagem de usuários](preview.png)
+
+[![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptopenjdk.net)
 ![Made in Brazil](https://img.shields.io/badge/made%20in-brazil-green.svg)
 ![Project Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
@@ -9,27 +11,32 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
 ## 🚀 Como rodar o projeto
 
 1. **Pré-requisitos:**
-   - [Java 24](https://adoptopenjdk.net/)
+   - [Java 21](https://adoptopenjdk.net/)
    - [MySQL Server](https://www.mysql.com/)
+   - [Tomcat 11.0.6]()
    - [IntelliJ IDEA](https://www.jetbrains.com/idea/) (opcional, mas recomendado)
 
-2. **Configuração do Banco de Dados:**
-   - Crie um banco de dados MySQL.
-   - Atualize as configurações de conexão (URL, usuário e senha) conforme necessário nos arquivos do projeto.
+2. **Clone o projeto**
+   ```bash
+   git clone https://github.com/ItaloBrazucaDeveloper/JakartaCrud.git
+   ```   
 
-3. **Execução:**
-   - Clone este repositório.
-   - Abra o projeto no IntelliJ IDEA.
-   - Execute a aplicação a partir da classe principal (`main`).
-   - O sistema estará disponível para utilização localmente.
-
-## ⚒️ Tecnologias
-
-- Java 21
-- Hibernate
-- MySQL
-- IntelliJ IDEA (recomendado)
-- JDBC
+3. **Entre na pasta do projeto**
+    ```bash
+   cd JakartaCrud
+   ```
+   
+4. **Defina as variáveis de ambiente, seguindo o padrão do arquivo .example**
+   ```bash
+   # Comando para copiar o arquivo '.example.env' e colar como '.env'
+   cp .example.env .env
+   ```
+   
+   ```plaintext
+   DB_URL=url_para_o_seu_banco_mysql
+   DB_USER=nome_do_seu_usuario
+   DB_PASS=senha_do_seu_usuario
+   ```
 
 ---
 

@@ -14,8 +14,8 @@ public class LoginService implements ILoginService {
 		this.repository = new LoginRepository();
 	}
 
-	public Optional<User> login(String email, String password) {
-		return repository.validate(email, password);
+	public Optional<User> validate(String email, String password) {
+		return repository.checkCredentials(email, password);
 	}
 
 	public void setUserSession(HttpSession session, User user) {

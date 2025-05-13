@@ -1,6 +1,7 @@
 const updateUserForm = document.querySelector("#update-user-form")
 
 export function setupEditUser() {
+    if (!updateUserForm) return
     updateUserForm.onsubmit = (e) => {
         e.preventDefault()
         const form = new FormData(updateUserForm);

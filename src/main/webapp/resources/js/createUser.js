@@ -1,6 +1,7 @@
 const createUserForm = document.querySelector("#create-user-form")
 
 export function setupCreateUser() {
+    if (!createUserForm) return
     createUserForm.onsubmit = (e) => {
         e.preventDefault()
         const form = new FormData(createUserForm)

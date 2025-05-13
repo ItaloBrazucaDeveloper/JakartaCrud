@@ -7,12 +7,10 @@ const baseClasses = [
 ]
 
 const successClasses = ['bg-emerald-500', 'text-zinc-50', 'border', 'border-emerald-600']
-const errorClasses   = ['bg-rose-500', 'text-zinc-50', 'border', 'border-rose-600']
+const errorClasses = ['bg-rose-500', 'text-zinc-50', 'border', 'border-rose-600']
 
 export function showFlashMessage(type, message) {
-    // Remove mensagens existentes (opcional)
     document.querySelectorAll('.flash-message').forEach(el => el.remove())
-
     const isSuccess = type === 'success'
 
     const container = document.createElement('div')
