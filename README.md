@@ -13,7 +13,7 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
 1. **Pré-requisitos:**
    - [Java 21](https://adoptopenjdk.net/)
    - [MySQL Server](https://www.mysql.com/)
-   - [Tomcat 11.0.6]()
+   - [Tomcat 11.0.6](https://tomcat.apache.org/)
    - [IntelliJ IDEA](https://www.jetbrains.com/idea/) (opcional, mas recomendado)
 
 2. **Clone o projeto**
@@ -26,16 +26,23 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
    cd JakartaCrud
    ```
    
-4. **Defina as variáveis de ambiente, seguindo o padrão do arquivo .example**
+4. **Instale as depedências**
+   ```bash
+   mvn install
+   ```
+
+5. **Defina as variáveis de ambiente, seguindo o padrão do arquivo .example**
    ```bash
    # Comando para copiar o arquivo '.example.env' e colar como '.env'
    cp .example.env .env
    ```
    
+   Exemplo:
+
    ```plaintext
-   DB_URL=url_para_o_seu_banco_mysql
-   DB_USER=nome_do_seu_usuario
-   DB_PASS=senha_do_seu_usuario
+   DB_URL=jdbc:mysql://seu_host:porta/nome_do_banco
+   DB_USER=bananinha
+   DB_PASS=@gigawats
    ```
 
 ---
