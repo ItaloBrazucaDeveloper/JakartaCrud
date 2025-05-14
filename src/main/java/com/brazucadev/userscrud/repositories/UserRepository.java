@@ -12,11 +12,11 @@ public class UserRepository extends Repository implements IUserRepository {
     public List<User> read(Optional<String> id) {
 	    try (EntityManager em = getEntityManager()) {
 		    if (id.isPresent()) {
-			    return em.createQuery("SELECT u FROM Users u WHERE u.id = :id", User.class)
+			    return em.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
 				    .setParameter("id", Long.parseLong(id.get()))
 				    .getResultList();
 		    }
-		    return em.createQuery("SELECT u FROM Users u", User.class)
+		    return em.createQuery("SELECT u FROM User u", User.class)
 			    .getResultList();
 	    } catch (Exception ex) {
 		    return new ArrayList<>();

@@ -20,6 +20,40 @@
     }
 }
 
+@keyframes pop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    70% {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pop-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+}
+
 .flash-message-animation {
     animation: flash-message 3s forwards ease-out 0.500s;
 }
@@ -27,4 +61,12 @@
 .hidden-scroll {
     scrollbar-width: none;
     -ms-overflow-style: none;
+}
+
+.pop-in {
+    animation: pop 0.3s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+}
+
+.pop-out {
+    animation: pop-out 0.3s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
 }

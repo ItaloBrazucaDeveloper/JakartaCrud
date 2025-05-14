@@ -4,9 +4,11 @@ export function setupEditUser() {
     if (!updateUserForm) return
     updateUserForm.onsubmit = (e) => {
         e.preventDefault()
-        const form = new FormData(updateUserForm);
-        const formObject = Object.fromEntries(form.entries());
-        const fieldsAsJson = JSON.stringify(formObject);
+        updateUserForm.querySelector('button[type="submit"]').disabled = true
+
+        const form = new FormData(updateUserForm)
+        const formObject = Object.fromEntries(form.entries())
+        const fieldsAsJson = JSON.stringify(formObject)
 
         fetch('http://localhost:8080/UsersCrud_war_exploded/users', {
             method: 'PUT',

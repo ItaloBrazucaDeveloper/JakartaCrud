@@ -10,8 +10,8 @@ public class LoginRepository extends Repository implements ILoginRepository {
 	@Override
 	public Optional<User> checkCredentials(String email, String password) {
 		try {
-			User user = this.getEntityManager()
-				.createQuery("SELECT u FROM Users u WHERE u.email = :email", User.class)
+			User user = getEntityManager()
+				.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
 				.setParameter("email", email)
 				.getSingleResult();
 

@@ -13,6 +13,12 @@
 
 <body>
     <main class="h-screen w-full grid place-items-center bg-amber-100">
+        <c:if test="${not empty errorMessage}">
+            <div class="flash-message-animation flash-message absolute top-0 left-0 z-50 m-5 bg-rose-600 text-zinc-50 min-w-[260px] text-center shadow-md border border-rose-700 rounded-md py-4 px-6">
+                <c:out value="${errorMessage}" />
+            </div>
+        </c:if>
+
         <div class="border border-neutral-200/60 outline-3 outline-neutral-100 bg-amber-50 shadow-md rounded-md p-5">
             <h1 class="text-lg font-bold text-amber-900">
                 Welcome back!
@@ -44,12 +50,6 @@
                 <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-sm">
                     <i class="bi bi-box-arrow-in-right mr-1 stroke-2 size-10"></i> Sign In
                 </button>
-
-                <c:if test="${not empty errorMessage}">
-                    <span class="text-rose-500 w-full text-center outline-1 outline-rose-600 rounded-md py-3">
-                        <c:out value="${errorMessage}" />
-                    </span>
-                </c:if>
             </form>
         </div>
     </main>

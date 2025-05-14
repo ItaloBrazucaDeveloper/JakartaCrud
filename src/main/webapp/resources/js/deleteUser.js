@@ -4,6 +4,8 @@ export function setupDeleteUser() {
     if (!deleteUserForm) return
     deleteUserForm.onsubmit = (e) => {
         e.preventDefault()
+        deleteUserForm.querySelector('button[type="submit"]').disabled = true
+
         const form = new FormData(deleteUserForm)
         const id = form.get('delete-user-id')
 

@@ -222,17 +222,19 @@
                     />
                 </div>
 
-                <div class="grid gap-1">
-                    <label for="update-user-role" class="text-neutral-600 font-medium">Select a role</label>
-                    <select
+                <c:if test="${isSuperUser}">
+                    <div class="grid gap-1">
+                        <label for="update-user-role" class="text-neutral-600 font-medium">Select a role</label>
+                        <select
                             class="block w-full rounded-md outline-2 outline-stone-300 focus:outline-stone-400 p-2 shadow-sm"
                             id="update-user-role"
                             name="update-user-role"
-                    >
-                        <option value="2">Common user</option>
-                        <option value="1">Super user</option>
-                    </select>
-                </div>
+                        >
+                            <option value="2">Common user</option>
+                            <option value="1">Super user</option>
+                        </select>
+                    </div>
+                </c:if>
 
                 <button type="submit" class="mt-2 bg-emerald-600 hover:opacity-90 text-amber-50 rounded-xl px-4 py-3 w-full font-bold cursor-pointer shadow-md ring-2 ring-emerald-700/80">
                     Update user

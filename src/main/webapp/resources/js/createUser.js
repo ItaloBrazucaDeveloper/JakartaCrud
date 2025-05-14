@@ -4,6 +4,8 @@ export function setupCreateUser() {
     if (!createUserForm) return
     createUserForm.onsubmit = (e) => {
         e.preventDefault()
+        createUserForm.querySelector('button[type="submit"]').disabled = true
+
         const form = new FormData(createUserForm)
         const fieldsAsSearchParams = new URLSearchParams(form);
 

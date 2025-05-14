@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserService implements IUserService {
-    private UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository = new UserRepository();
 
-    public User setBcryptPassword(User user) {
-        if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
-            user.setPassword(Bcrypt.hashPassword(user.getPassword()));
+    public String setBcryptPassword(String password) {
+        if (password != null && !password.startsWith("$2a$")) {
+            return Bcrypt.hashPassword(password);
         }
-        return user;
+        return null;
     }
 
     @Override
@@ -22,12 +22,16 @@ public class UserService implements IUserService {
 
     @Override
     public boolean push(User user) {
-        return this.userRepository.create(setBcryptPassword(user));
+        String hashedPassowrd = setBcryptPassword(user.getPassword());
+        if (hashedPassowrd != null) user.setPassword(hashedPassowrd);
+        return this.userRepository.create(user);
     }
 
     @Override
     public boolean refresh(User user) {
-        return this.userRepository.update(setBcryptPassword(user));
+        String hashedPassowrd = setBcryptPassword(user.getPassword());
+        if (hashedPassowrd != null) user.setPassword(hashedPassowrd);
+        return this.userRepository.update(user);
     }
 
     @Override

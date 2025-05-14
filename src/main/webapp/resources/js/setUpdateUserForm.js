@@ -11,6 +11,6 @@ export function setUpdateUserForm(userId) {
         .then(data => {
             nameField.value = data.name || '';
             emailField.value = data.email || '';
-            roleField.value = data.role || '';
+            if (!roleField) roleField.value = data.role || '';
         })
 }

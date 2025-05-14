@@ -1,9 +1,8 @@
 // Tailwind classes para flash messages
 const baseClasses = [
-    'flash-message',
     'fixed', 'top-6', 'left-1/2', 'transform', '-translate-x-1/2',
     'z-50', 'px-6', 'py-4', 'rounded-lg', 'shadow-md',
-    'flex', 'items-center', 'gap-4', 'min-w-[260px]', 'max-w-full'
+    'flex', 'items-center', 'gap-4', 'min-w-[260px]'
 ]
 
 const successClasses = ['bg-emerald-500', 'text-zinc-50', 'border', 'border-emerald-600']
@@ -19,7 +18,7 @@ export function showFlashMessage(type, message) {
 
     const span = document.createElement('span')
     span.textContent = message
-    span.className = 'font-semibold flex-1'
+    span.className = 'font-semibold text-center'
 
     container.appendChild(span)
     document.body.prepend(container)

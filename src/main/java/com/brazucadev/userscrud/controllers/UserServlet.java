@@ -19,12 +19,12 @@ import java.util.Optional;
 
 @WebServlet(name="userServlet", value="/users")
 public class UserServlet extends HttpServlet {
-    private IUserService userService = new UserService();
-    private UserBuilder userBuilder = new UserBuilder();
+    private final IUserService userService = new UserService();
+    private final UserBuilder userBuilder = new UserBuilder();
 
     private void writeJsonResponse(HttpServletResponse resp, int status, String json) throws IOException {
-        resp.setStatus(status);
         resp.setContentType("application/json");
+        resp.setStatus(status);
         resp.getWriter().write(json);
     }
 
@@ -35,16 +35,15 @@ public class UserServlet extends HttpServlet {
             req.setAttribute("flashMessage", flash);
             req.getSession().removeAttribute("flashMessage");
         }
+        String userId = req.getParameter("id");
+        List<User> users = userService.list(Optional.ofNullable(userId));
 
-        Optional<String> userId = Optional.ofNullable(req.getParameter("id"));
-        List<User> users = userService.list(userId);
-
-        if (users.size() > 1) {
+	      if (userId == null) {
             req.setAttribute("users", users);
             req.getRequestDispatcher("/views/user.jsp").forward(req, resp);
-        } else if (!users.isEmpty()) {
-            writeJsonResponse(resp, HttpServletResponse.SC_OK, new Gson().toJson(users.getFirst()));
+            return;
         }
+        writeJsonResponse(resp, HttpServletResponse.SC_OK, new Gson().toJson(users.getFirst()));
     }
 
     @Override
@@ -58,7 +57,7 @@ public class UserServlet extends HttpServlet {
 
         if (this.userService.push(user)) {
             writeJsonResponse(resp, HttpServletResponse.SC_OK,
-              "{\"type\":\"success\", \"message\":\"User registered successfully!\n\"}");
+              "{\"type\":\"success\", \"message\":\"User registered successfully!\"}");
         } else {
             writeJsonResponse(resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
               "{\"type\":\"error\", \"message\":\"Failed to create user!\"}");
@@ -67,7 +66,6 @@ public class UserServlet extends HttpServlet {
 
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject jsonBody = JsonBodyParser.parseBodyAsJson(req);
-
         User user = this.userBuilder
             .withId(Long.parseLong(jsonBody.get("update-user-id").getAsString()))
             .withName(jsonBody.get("update-user-name").getAsString())
@@ -90,7 +88,7 @@ public class UserServlet extends HttpServlet {
         Optional<String> userId = Optional.ofNullable(req.getParameter("id"));
         if (userId.isEmpty()) {
             writeJsonResponse(resp, HttpServletResponse.SC_BAD_REQUEST,
-              "{\"type\":\"error\", \"message\":\"User ID is required!\"}");
+              "{\"type\":\"error\", \"message\":\"User ID is required!\"}\n");
             return;
         }
 
