@@ -16,8 +16,7 @@ public class UserRepository extends Repository implements IUserRepository {
 				    .setParameter("id", Long.parseLong(id.get()))
 				    .getResultList();
 		    }
-		    return em.createQuery("SELECT u FROM User u", User.class)
-			    .getResultList();
+		    return em.createQuery("SELECT u FROM User u", User.class).getResultList();
 	    } catch (Exception ex) {
 		    return new ArrayList<>();
 	    }
@@ -32,7 +31,6 @@ public class UserRepository extends Repository implements IUserRepository {
     @Override
     public boolean delete(long id) {
         EntityManager em = getEntityManager();
-
         try {
             em.getTransaction().begin();
             User user = em.find(User.class, id);

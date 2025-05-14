@@ -17,12 +17,12 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
 
 2. **Clone o projeto**
    ```bash
-   git clone https://github.com/ItaloBrazucaDeveloper/JakartaCrud.git
+   git clone https://github.com/ItaloBrazucaDeveloper/UsersCrud.git
    ```   
 
 3. **Entre na pasta do projeto**
     ```bash
-   cd JakartaCrud
+   cd UsersCrud
    ```
    
 4. **Instale as depedências**
@@ -30,18 +30,12 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
    mvn install
    ```
 
-5. **Defina as variáveis de ambiente, seguindo o padrão do arquivo .example**
-   ```bash
-   # Comando para copiar o arquivo '.example.env' e colar como '.env'
-   cp .example.env .env
-   ```
-   
-   Exemplo:
+5. **Defina as credencias do seu banco MySql no arquivo [persistence.xml](src/main/resources/META-INF/persistence.xml)**
 
-   ```plaintext
-   DB_URL=jdbc:mysql://seu_host:porta/nome_do_banco
-   DB_USER=bananinha
-   DB_PASS=@gigawats
+   ```xml
+   <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DB_NAME"/>
+   <property name="jakarta.persistence.jdbc.user" value="DB_USERNAME"/>
+   <property name="jakarta.persistence.jdbc.password" value="DB_PASS"/>
    ```
 
 6. **Faça o build do projeto**
@@ -51,10 +45,10 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
 
 7. **Mova o arquivo .war gerado para a pasta webapp do tomcat**
    ```bash
-   cp target/build_gerado.war /caminho/para/o/tomcat/webapp/
+   cp ./target/UsersCrud_1.0.war /caminho/para/o/tomcat/webapp/
    ```
 
-8. **Acesse o projeto via localhost http://localhost:8080/build_gerado/**
+8. **Acesse o projeto via localhost http://localhost:8080/UsersCrud-1.0/**
 
 ---
 
