@@ -11,7 +11,7 @@ Mini projeto de CRUD (Create, Read, Update, Delete) com conexão ao banco de dad
 ## 🚀 Como rodar o projeto
 
 1. **Pré-requisitos:**
-   - [Java 21](https://adoptopenjdk.net/)
+   - [Java 21](https://www.oracle.com/java/technologies/downloads/)
    - [MySQL](https://www.mysql.com/)
    - [Tomcat 11.0.6](https://tomcat.apache.org/)
 
