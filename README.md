@@ -2,7 +2,7 @@
 
 ![Imagem da listagem de usuários](preview.png)
 
-[![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptopenjdk.net)
+[![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/technologies/downloads/)
 ![Made in Brazil](https://img.shields.io/badge/made%20in-brazil-green.svg)
 ![Project Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
